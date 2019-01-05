@@ -5,14 +5,20 @@ import java.io.IOException;
 import java.util.List;
 
 import com.bgi.io.IOUtil;
-import com.bgi.trie.Node;
-import com.bgi.trie.Trie;
+import com.bgi.bktree.trie.BNode;
+import com.bgi.bktree.trie.Trie;
 import com.bgi.correct.NGram;
+import com.bgi.util.SystemConfig;
 
+/***
+ * N-Gram统计后构建的键树
+ * @author liuyong
+ *
+ */
 public class CTrie extends Trie {
-	public static int THRESHOLD = 0;
-	public static int N = 3;
-	public static String SEPARATOR = " ";
+	public static int THRESHOLD = SystemConfig.THRESHOLD;
+	public static int N = SystemConfig.N_GRAM;
+	public static String SEPARATOR = SystemConfig.SEPARATOR;
 
 	
 	/**
@@ -45,13 +51,13 @@ public class CTrie extends Trie {
      * @param word
      */
     public void addKey(String word) {
-        Node node = root;
+        BNode node = root;
         int len = word.length();
         for (int i = 0; i < len; i++) {
             char c = word.charAt(i);
-            Node subNode = node.values.get(c);
+            BNode subNode = (BNode)node.values.get(c);
             if (subNode == null) {
-                subNode = new Node();
+                subNode = new BNode();
                 node.values.put(c, subNode);
             }
             node = subNode;
@@ -73,12 +79,12 @@ public class CTrie extends Trie {
             return -1;
         }
         
-        Node node = root;
+        BNode node = root;
         int size = word.length();
-        Node subNode = null;
+        BNode subNode = null;
         for (int i = 0; i < size; i++) {
             char c = word.charAt(i);
-            subNode = node.values.get(c);
+            subNode = (BNode)node.values.get(c);
             if (subNode == null) { // 节点不存在
                 return -1;
             }

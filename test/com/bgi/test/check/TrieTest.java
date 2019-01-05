@@ -1,6 +1,7 @@
 package com.bgi.test.check;
 
-import com.bgi.trie.Trie;
+import com.bgi.bktree.trie.Trie;
+
 
 public class TrieTest {
 
