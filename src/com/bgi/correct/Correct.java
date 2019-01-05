@@ -6,17 +6,21 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.bgi.bktree.BKTree;
-import com.bgi.bktree.Element;
 import com.bgi.correct.trie.CTrie;
+import com.bgi.util.SystemConfig;
+import com.bgi.util.Element;
 
 
 public class Correct {
-	public static int N = 3;
-	public static String SEPARATOR = " ";
+	public static int N = SystemConfig.N_GRAM;
+	public static String SEPARATOR = SystemConfig.SEPARATOR;
 	public static CTrie TRIE = null;
 	
-	public static double RADIUS = 1;
-	public static BKTree<String> BKTREE = null;
+	public static double RADIUS = SystemConfig.SRADIUS;
+	public static BKTree<String> BKTREE = SystemConfig.BKTREE;
+	
+	public Correct() {	
+	}
 	
 	
 	public static String extract(String text, int N) {
@@ -27,8 +31,8 @@ public class Correct {
 	
 	public static String collect(String text, int N) {
 		String[] arr = text.split(SEPARATOR);
-		
 		StringBuilder sb = new StringBuilder();
+		
 		for (int i = N - 2; i < N; i++) {
 			if (i == N - 1) {
 				sb.append(arr[i]);
@@ -83,7 +87,6 @@ public class Correct {
 				}
 			}
 		}
-		
 		return sb.toString();
 	}
 	
@@ -106,7 +109,6 @@ public class Correct {
 				}
 			}
 		}
-		
 		return sb.toString();
 	}
 	
@@ -175,7 +177,5 @@ public class Correct {
 	public static void main(String[] args) {
 		String text = "I Love NLP hello world";
 		System.out.println(extract(text, 3));
-
 	}
-
 }

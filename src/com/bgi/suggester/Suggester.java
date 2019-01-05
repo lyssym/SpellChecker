@@ -2,20 +2,25 @@ package com.bgi.suggester;
 
 import java.util.List;
 
-import com.bgi.trie.PTrie;
-import com.bgi.trie.Trie;
+import com.bgi.bktree.trie.Trie;
+import com.bgi.suggester.trie.PTrie;
+import com.bgi.util.SystemConfig;
 
 public class Suggester {
-	private PTrie trie = null;
+	private PTrie trie = SystemConfig.PTRIE;
 	
-	public Suggester(Trie trie, String fileName) {
+	
+	public Suggester() {
+	}
+	
+	
+	public Suggester(Trie trie) {
 		this.trie = new PTrie(trie);
-		this.trie.initTrie(fileName);
 	}
 	
 	
 	public List<String> autoCompletion(String prefix) {
-		return this.trie.queryKey(prefix);
+		return trie.queryKey(prefix);
 	}
 
 }

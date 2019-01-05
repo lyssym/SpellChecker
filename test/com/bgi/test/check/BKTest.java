@@ -9,7 +9,8 @@ import com.bgi.bktree.BKTree;
 import com.bgi.bktree.LevensteinDistance;
 import com.bgi.bktree.MetricSpace;
 import com.bgi.io.IOUtil;
-import com.bgi.trie.Trie;
+import com.bgi.bktree.trie.Trie;
+import com.bgi.util.SystemConfig;
 
 public class BKTest {
 	
@@ -38,20 +39,18 @@ public class BKTest {
 
 	
 	public static void main(String[] args) {
-        double radius = 3;          // 编辑距离阈值
-        String term = "lik";        // 待纠错的词
-        String fileName = "data.txt";
-        Trie trie = new Trie();
-        trie.initTrie(fileName);
+        double radius = SystemConfig.WRADIUS;    // 编辑距离阈值
+        String term = "lik";                     // 待纠错的词
+        String fileName = "history.txt";
+//        Trie trie = new Trie();
+//        trie.initTrie(fileName);
         
         // 创建BK树
         MetricSpace<String> ms = new LevensteinDistance();
         List<String> elems = initTree(fileName);
-        BKTree<String> bk = BKTree.mkBKTree(ms, trie, elems);
+        BKTree<String> bk = BKTree.mkBKTree(ms, elems);
         
         List<String> set = bk.query(term, radius);
         System.out.println(set.toString());
-
 	}
-
 }

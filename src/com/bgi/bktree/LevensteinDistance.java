@@ -141,7 +141,6 @@ public class LevensteinDistance implements MetricSpace<String> {
     }
 
     
-    
     public static void main(String[] args) {
         LevensteinDistance distance = new LevensteinDistance();
         System.out.println(distance.computeDistance("hello", "hellt"));

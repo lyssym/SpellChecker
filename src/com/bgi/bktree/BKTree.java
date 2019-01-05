@@ -8,12 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bgi.trie.Trie;
+import com.bgi.bktree.trie.Trie;
+import com.bgi.util.SystemConfig;
+import com.bgi.util.Element;
 
 public class BKTree<T> {
+	private static Trie trie = SystemConfig.TRIE;
     private final MetricSpace<T> metricSpace;
-    private static Trie trie;
+    
     private Node<T> root;
+    
+    public BKTree(MetricSpace<T> metricSpace) {
+        this.metricSpace = metricSpace;
+    }
+    
     
     public BKTree(MetricSpace<T> metricSpace, Trie trie) {
         this.metricSpace = metricSpace;
@@ -27,15 +35,30 @@ public class BKTree<T> {
      * @param elems
      * @return
      */
-    public static <E> BKTree<E> mkBKTree(MetricSpace<E> ms, Trie trie, Collection<E> elems) {
+    public static <E> BKTree<E> mkBKTree(MetricSpace<E> ms, Collection<E> elems) {
+        BKTree<E> bkTree = new BKTree<E>(ms);
+        for (E elem : elems) {
+            bkTree.put(elem);
+        }
+        return bkTree;
+    }
+    
+    
+    /**
+     * 根据某一个集合元素创建BK树
+     * @param ms
+     * @param elems
+     * @return
+     */
+    public static <E> BKTree<E> mkBKTree(MetricSpace<E> ms, Trie trie, 
+    		Collection<E> elems) {
         BKTree<E> bkTree = new BKTree<E>(ms, trie);
         for (E elem : elems) {
             bkTree.put(elem);
         }
-        
         return bkTree;
     }
-
+    
 
     /**
      * BK树中添加元素
@@ -150,7 +173,7 @@ public class BKTree<T> {
                 if (child != null) {
                     child.query(ms, term, radius, results);
                 }
-            }    
+            }
         }
     }
 }
